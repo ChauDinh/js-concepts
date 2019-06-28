@@ -152,3 +152,36 @@ b.foods.dinner = "Rice";
 console.log(b.foods.dinner); // displays Pizza
 console.log(a.foods.dinner); // displays Rice
 ```
+
+### Copying in Arrays
+
+Since arrays are also objects in JavaScript, we can apply similar techniques like we've used in objects.
+
+```js
+// Spread operator in arrays
+const a = [1, 2, 3];
+let b = [...a];
+b[1] = 4;
+
+console.log(b[1]); // displays 4
+console.log(a[1]); // displays 2
+```
+
+But, arrays have some other interesting things beyond spread operator. There are several methods, including: map, filter, reduce return a new array with all values(or some) of the original one.
+
+```js
+const a = [1, 2, 3];
+let b = a.map(e => e);
+b[1] = 4;
+console.log(b[1]); // displays 4
+console.log(a[1]); // displays 2
+```
+
+Or you can change the desired element while copying.
+
+```js
+const a = [1, 2, 3];
+let b = a.map((e, index) => (index === 1 ? 4 : e));
+console.log(b[1]); // displays 4
+console.log(a[1]); // displays 2
+```
