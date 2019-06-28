@@ -185,3 +185,33 @@ let b = a.map((e, index) => (index === 1 ? 4 : e));
 console.log(b[1]); // displays 4
 console.log(a[1]); // displays 2
 ```
+
+Deep clone with slice()
+
+```js
+const a = [1, 2, 3];
+let b = a.slice(0);
+b[1] = 4;
+console.log(b[1]); // displays 4
+console.log(a[1]); // displays 2
+```
+
+For nested arrays, if we use above methods, it will generate a shallow copy.
+
+```js
+const a = [1, 2, 3, [4, 5, 6, [7]]];
+let b = [...a];
+b[3][3] = 4;
+console.log(b[3][3]); // displays 4
+console.log(a[3][3]); // displays 4
+```
+
+To prevent that, we will use `JSON.parse(JSON.stringify(sourceArray))` like the case in objects.
+
+```js
+const a = [1, 2, 3, [4, 5, 6, [7]]];
+let b = JSON.parse(JSON.stringify(a));
+b[3][3] = 4;
+console.log(b[3][3]); // displays 4
+console.log(a[3][3]); // displays [7]
+```
