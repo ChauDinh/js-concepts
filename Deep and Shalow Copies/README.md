@@ -215,3 +215,35 @@ b[3][3] = 4;
 console.log(b[3][3]); // displays 4
 console.log(a[3][3]); // displays [7]
 ```
+
+### Custom classes
+
+I put this topic in the last section of the post as I think we have already pro in JavaScript to deal with custom constructor functions or classes.
+
+We cannot apply `stringify` and `parse` since they would lose your class methods.
+
+Here is how it works
+
+```js
+class Counter {
+  constructor() {
+    this.count = 5;
+  }
+
+  copy() {
+    const copy = new Counter();
+    copy.count = this.count;
+    return copy;
+  }
+}
+
+const originalCounter = new Counter();
+const copiedCounter = originalCounter.copy();
+
+console.log(originalCounter.count); // displays 5
+console.log(copiedCounter.count); // display 5
+
+copiedCounter.count = 7;
+console.log(originalCounter.count); // displays 5
+console.log(copiedCounter.count); // displays 7
+```
