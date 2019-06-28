@@ -247,3 +247,38 @@ copiedCounter.count = 7;
 console.log(originalCounter.count); // displays 5
 console.log(copiedCounter.count); // displays 7
 ```
+
+### Referenced objects and arrays
+
+Finally, to deal with objects and arrays that are referenced inside of your instance, you would have to apply newly learned about deep copying.
+
+```js
+class Counter {
+  constructor() {
+    this.count = 5;
+    this.add = function() {
+      this.count++;
+    };
+  }
+
+  copy() {
+    const copy = new Counter();
+
+    Object.keys(this).forEach(key => {
+      const value = this[key];
+
+      switch (typeof value) {
+        case "function":
+          break;
+        case "object":
+          copy[key] = JSON.stringify(JSON.parse(value));
+          break;
+        default:
+          copy[key] = value;
+          break;
+      }
+    });
+    return copy;
+  }
+}
+```

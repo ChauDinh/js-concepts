@@ -37,7 +37,22 @@ class Counter {
 
   copy() {
     const copy = new Counter();
-    copy.count = this.count;
+
+    Object.keys(this).forEach(key => {
+      const value = this[key];
+
+      switch (typeof value) {
+        case "function":
+          break;
+        case "object":
+          copy[key] = JSON.stringify(JSON.parse(value));
+          break;
+        default:
+          copy[key] = value;
+          break;
+      }
+    });
+
     return copy;
   }
 }
