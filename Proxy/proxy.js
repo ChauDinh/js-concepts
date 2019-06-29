@@ -16,28 +16,28 @@
 // p.email = "thienlongbatbo@yahoo.com";
 // console.log(p.email);
 
-const validator = {
-  // create handler object
-  set: function(obj, prop, value) {
-    if (prop === "age") {
-      if (typeof value !== "number" || Number.isNaN(value)) {
-        console.log("Age must be a number");
-      }
-      if (value < 0) {
-        console.log("Age must be a positive number");
-      }
-    }
+// const validator = {
+//   // create handler object
+//   set: function(obj, prop, value) {
+//     if (prop === "age") {
+//       if (typeof value !== "number" || Number.isNaN(value)) {
+//         console.log("Age must be a number");
+//       }
+//       if (value < 0) {
+//         console.log("Age must be a positive number");
+//       }
+//     }
 
-    obj[prop] = value;
-    return true;
-  }
-};
+//     obj[prop] = value;
+//     return true;
+//   }
+// };
 
-let person = new Proxy({}, validator);
-person.age = "young";
-person.age = -30;
-person.age = 1000;
-console.log(person.age);
+// let person = new Proxy({}, validator);
+// person.age = "young";
+// person.age = -30;
+// person.age = 1000;
+// console.log(person.age);
 
 const displayHandler = {
   get: function(obj, prop) {
@@ -58,3 +58,24 @@ let proxiedObj = new Proxy(initialObj, displayHandler);
 
 console.log(proxiedObj.name);
 proxiedObj.age = 24;
+
+// A real world case
+
+const handler = {
+  get: function(obj, prop) {
+    if (prop === "id") {
+      throw new Error("Cannot access private property!");
+    } else {
+      return obj[prop];
+    }
+  }
+};
+
+const person = {
+  id: 1,
+  name: "Doan Du"
+};
+
+const proxiedPerson = new Proxy(person, handler);
+
+console.log(proxiedPerson.id);

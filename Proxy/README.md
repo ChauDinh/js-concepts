@@ -169,3 +169,45 @@ const proxiedObj = new Proxy(initialObj, displayHandler);
 
 proxiedObj.age = 24; // return age is being set to 24
 ```
+
+The last line of code, where the access being made, will trigger the `set` function which will log the property being accessed and the value being set.
+
+### A real-world case
+
+We're now going to concern an example practically.
+
+```js
+const person = {
+  id: 1,
+  name: "Doan Du"
+};
+```
+
+What if we want to make the id property of this object a `private` property? That means no one can access the personal id via `person.id`. In that case, it would throw an error. How we deal with that?
+
+Proxies to the rescure.!
+
+We need to create a proxy of this object - called proxiedPerson and override the get operator to prevent us from the `id` property.
+
+```js
+const handler = {
+  get: function(obj, prop) {
+    if (prop === "id") {
+      throw new Error("Cannot access private property");
+    } else {
+      return obj[prop];
+    }
+  }
+};
+
+const person = {
+  id: 1,
+  name: "Doan Du"
+};
+
+const proxiedPerson = new Proxy(person, handler);
+
+console.log(proxiedPerson.id);
+```
+
+In the console screen you would see the message "Cannot access private property". Otherwise, the `proxiedPerson.name` would returns the value as usual.
