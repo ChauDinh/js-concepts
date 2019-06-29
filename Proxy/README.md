@@ -242,7 +242,7 @@ proxiedObj.age = 24; // throw an error.
 
 These examples above show us the Proxy with `set` and `get` traps. These are actually the mostly used in practice. However, there are a lot of traps that we can use in `handler` object.
 
-### handler.defineProperty() and handler.deleteProperty()
+<b>handler.defineProperty() </b>
 
 ```js
 const handler = {
@@ -265,4 +265,24 @@ proxiedP._hello = 1; // displays an error
 
 proxiedP.hello = 1;
 console.log(proxiedP);
+```
+
+Other traps you can check at [MDN Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy);
+
+### Challenge!!!
+
+To concluse, we will try a challenge on codewars [The Builder of Things](https://www.codewars.com/kata/5571d9fc11526780a000011a). Particularly, we will write a `Thing` object allowing us define things in descriptive sentences.
+
+```js
+const t = new Thing("Hoang Thuy Linh");
+t.name; // displays Hoang Thuy Linh
+
+t.is_a.singer;
+t.is_not_a.teacher;
+
+t.is_a_singer; // displays true
+t.is_a_teacher; // displays false
+
+t.can.sing("Để Mị nói cho mà nghe, sông Hương đã đẩy Mị lệch tủ cmnr :(((");
+t.sing(); // displays Để Mị nói cho mà nghe, sông Hương đã đẩy Mị lệch tủ cmnr :(((
 ```
