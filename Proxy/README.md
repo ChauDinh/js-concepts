@@ -211,3 +211,29 @@ console.log(proxiedPerson.id);
 ```
 
 In the console screen you would see the message "Cannot access private property". Otherwise, the `proxiedPerson.name` would returns the value as usual.
+
+We can also use Proxy for the `set` traps. By setting a `set` trap, we can add custom validation before we set the value. If the value does not conform to the validation rules, we can throw an error.
+
+```js
+const handler = {
+  set: function(obj, prop, value) {
+    if (typeof value !== "string") {
+      throw new Error("Only string values are accepted!");
+    } else {
+      obj[prop] = value;
+    }
+  }
+};
+
+const obj = {};
+
+const proxiedObj = new Proxy(obj, handler);
+
+console.log(proxiedObj); // displays a blank object
+
+proxiedObj.name = "Foo Bar";
+
+console.log(proxiedObj); // displays an object with the name property set
+
+proxiedObj.age = 24; // throw an error.
+```
