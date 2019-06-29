@@ -80,22 +80,45 @@
 
 // console.log(proxiedPerson.id);
 
-const handler = {
-  defineProperty: function(obj, prop) {
-    if (prop.startsWith("_")) {
-      throw new Error("Properties starting with _ are not allowed!");
-    } else {
-      return Object.defineProperty(...arguments);
-    }
+// const handler = {
+//   defineProperty: function(obj, prop) {
+//     if (prop.startsWith("_")) {
+//       throw new Error("Properties starting with _ are not allowed!");
+//     } else {
+//       return Object.defineProperty(...arguments);
+//     }
+//   }
+// };
+
+// const p = {
+//   foo: 1,
+//   bar: true
+// };
+
+// const proxiedP = new Proxy(p, handler);
+
+// proxiedP.hello = 1;
+// console.log(proxiedP);
+
+class Thing {
+  constructor(name) {
+    this.state = { name };
+    return proxify(this, this.state);
   }
+}
+
+const proxify = (target, state) => {
+  return new Proxy(target, {
+    get(target, prop, receiver) {
+      if (prop === "name") {
+        return state[prop];
+      }
+      return target[prop];
+    }
+  });
 };
 
-const p = {
-  foo: 1,
-  bar: true
-};
+const t = new Thing("Hoang Thuy Linh");
 
-const proxiedP = new Proxy(p, handler);
-
-proxiedP.hello = 1;
-console.log(proxiedP);
+console.log(t.name);
+console.log(t.age);

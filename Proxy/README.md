@@ -286,3 +286,40 @@ t.is_a_teacher; // displays false
 t.can.sing("Để Mị nói cho mà nghe, sông Hương đã đẩy Mị lệch tủ cmnr :(((");
 t.sing(); // displays Để Mị nói cho mà nghe, sông Hương đã đẩy Mị lệch tủ cmnr :(((
 ```
+
+First, to access the property `name`, we properbly use a common method
+
+```js
+class Thing {
+  constructor(name) {
+    this.name = name;
+  }
+}
+```
+
+Unfortunately, we cannot apply this solution for this case. Using Proxy would be a reasonable choice.
+
+```js
+class Thing {
+  constructor(name) {
+    this.state = { name };
+    return proxify(this, this.state);
+  }
+}
+
+const proxify = (target, state) => {
+  return new Proxy(target, {
+    get(target, prop, receiver) {
+      if (prop === "name") {
+        return state[prop];
+      }
+      return target[prop];
+    }
+  });
+};
+
+const t = new Thing("Hoang Thuy Linh");
+
+console.log(t.name); // displays Hoang Thuy Linh
+console.log(t.age); // displays undefined≈
+```
