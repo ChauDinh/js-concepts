@@ -237,3 +237,32 @@ console.log(proxiedObj); // displays an object with the name property set
 
 proxiedObj.age = 24; // throw an error.
 ```
+
+### Exploring more...
+
+These examples above show us the Proxy with `set` and `get` traps. These are actually the mostly used in practice. However, there are a lot of traps that we can use in `handler` object.
+
+### handler.defineProperty() and handler.deleteProperty()
+
+```js
+const handler = {
+  defineProperty: function(obj, prop) {
+    if (prop.startsWith("_")) {
+      throw new Error("Properties starting with _ are not allowed!");
+    } else {
+      return Object.defineProperty(...arguments);
+    }
+  }
+};
+
+const p = {
+  foo: 1,
+  bar: true
+};
+
+const proxiedP = new Proxy(p, handler);
+proxiedP._hello = 1; // displays an error
+
+proxiedP.hello = 1;
+console.log(proxiedP);
+```

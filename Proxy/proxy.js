@@ -39,43 +39,63 @@
 // person.age = 1000;
 // console.log(person.age);
 
-const displayHandler = {
-  get: function(obj, prop) {
-    console.log("This message shown as the value has been accessed!");
-    return obj[prop];
-  },
-  set: function(obj, prop, value) {
-    console.log(`${prop} is being set to ${value}`);
-  }
-};
+// const displayHandler = {
+//   get: function(obj, prop) {
+//     console.log("This message shown as the value has been accessed!");
+//     return obj[prop];
+//   },
+//   set: function(obj, prop, value) {
+//     console.log(`${prop} is being set to ${value}`);
+//   }
+// };
 
-const initialObj = {
-  id: 1,
-  name: "Foo Bar"
-};
+// const initialObj = {
+//   id: 1,
+//   name: "Foo Bar"
+// };
 
-let proxiedObj = new Proxy(initialObj, displayHandler);
+// let proxiedObj = new Proxy(initialObj, displayHandler);
 
-console.log(proxiedObj.name);
-proxiedObj.age = 24;
+// console.log(proxiedObj.name);
+// proxiedObj.age = 24;
 
-// A real world case
+// // A real world case
+
+// const handler = {
+//   get: function(obj, prop) {
+//     if (prop === "id") {
+//       throw new Error("Cannot access private property!");
+//     } else {
+//       return obj[prop];
+//     }
+//   }
+// };
+
+// const person = {
+//   id: 1,
+//   name: "Doan Du"
+// };
+
+// const proxiedPerson = new Proxy(person, handler);
+
+// console.log(proxiedPerson.id);
 
 const handler = {
-  get: function(obj, prop) {
-    if (prop === "id") {
-      throw new Error("Cannot access private property!");
+  defineProperty: function(obj, prop) {
+    if (prop.startsWith("_")) {
+      throw new Error("Properties starting with _ are not allowed!");
     } else {
-      return obj[prop];
+      return Object.defineProperty(...arguments);
     }
   }
 };
 
-const person = {
-  id: 1,
-  name: "Doan Du"
+const p = {
+  foo: 1,
+  bar: true
 };
 
-const proxiedPerson = new Proxy(person, handler);
+const proxiedP = new Proxy(p, handler);
 
-console.log(proxiedPerson.id);
+proxiedP.hello = 1;
+console.log(proxiedP);
