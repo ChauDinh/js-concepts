@@ -43,6 +43,9 @@ const displayHandler = {
   get: function(obj, prop) {
     console.log("This message shown as the value has been accessed!");
     return obj[prop];
+  },
+  set: function(obj, prop, value) {
+    console.log(`${prop} is being set to ${value}`);
   }
 };
 
@@ -54,3 +57,4 @@ const initialObj = {
 let proxiedObj = new Proxy(initialObj, displayHandler);
 
 console.log(proxiedObj.name);
+proxiedObj.age = 24;

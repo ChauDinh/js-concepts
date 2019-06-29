@@ -142,3 +142,30 @@ const displayHandler {
 }
 ...
 ```
+
+### Adding more traps
+
+Now, let's add a trap for `set` operator as well. We'll do the same thing - anytime a value is set, we'll log the property being modified, as well as the value being set for that key.
+
+The `set` operator has three arguments - the object, the property being accessed and the value being set for that property.
+
+```js
+const displayHandler = {
+  get: function(obj, prop) {
+    console.log("This message shown as the value has been accessed!");
+    return obj[prop];
+  },
+  set: function(obj, prop, value) {
+    console.log(`${prop} is being set to ${value}`);
+  }
+};
+
+const initialObj = {
+  id: 1,
+  name: "Foo Bar"
+};
+
+const proxiedObj = new Proxy(initialObj, displayHandler);
+
+proxiedObj.age = 24; // return age is being set to 24
+```
