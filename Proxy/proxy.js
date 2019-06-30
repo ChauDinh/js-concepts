@@ -107,12 +107,27 @@ class Thing {
   }
 }
 
+function enterBooleanMode(receiver, state, booleanValue) {
+  state.inBooleanMode = true;
+  state.booleanValue = booleanValue;
+  return receiver;
+}
+
+function setBoolean(receiver, state, prop) {
+  state.booleans = { ...state.booleans, [prop]: state.booleanValue };
+  state.inBooleanMode = false;
+  state.booleanValue = null;
+}
+
 const proxify = (target, state) => {
   return new Proxy(target, {
-    get(target, prop, receiver) {
-      if (prop === "name") {
-        return state[prop];
-      }
+    get: function(target, prop, receiver) {
+      if (state.inBooleanMode) return setBoolean(this, state, prop);
+      if (prop === "name") return state[prop];
+      if (prop === "is_a") return enterBooleanMode(receiver, state, true);
+      if (prop === "is_not_a") return enterBooleanMode(receiver, state, false);
+      if (prop.startsWith("is_a_"))
+        return state.booleans[prop.replace("is_a_", "")];
       return target[prop];
     }
   });
@@ -120,5 +135,10 @@ const proxify = (target, state) => {
 
 const t = new Thing("Hoang Thuy Linh");
 
+t.is_a.singer;
+t.is_not_a.teacher;
+
 console.log(t.name);
 console.log(t.age);
+console.log(t.is_a_singer);
+console.log(t.is_a_teacher);

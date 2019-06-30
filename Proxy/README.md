@@ -297,7 +297,7 @@ class Thing {
 }
 ```
 
-Unfortunately, we cannot apply this solution for this case. Using Proxy would be a reasonable choice.
+Unfortunately, we cannot apply this solution for this case. Using Proxy would be a better choice.
 
 ```js
 class Thing {
@@ -322,4 +322,17 @@ const t = new Thing("Hoang Thuy Linh");
 
 console.log(t.name); // displays Hoang Thuy Linh
 console.log(t.age); // displays undefined≈
+```
+
+Ok, we've done accessing the `name`, now we'll consider other properties of object `Thing`.
+
+```
+t.is_a.singer
+t.is_not_a.teacher
+
+t.is_a_singer // displays true
+t.is_a_teacher // displays false
+```
+
+```js
 ```
