@@ -5,7 +5,7 @@
 const arr1 = [1, 2, 3];
 const arr2 = [1, 4, 9];
 
-const same = (arr1, arr2) => {
+module.exports.same = (arr1, arr2) => {
   if (arr1.length !== arr2.length) {
     return false;
   }
@@ -19,9 +19,9 @@ const same = (arr1, arr2) => {
   return true;
 };
 
-// const arr3 = [1, 2, 9, 10];
-// const arr4 = [1, 4, 81, 10];
-// console.log(same(arr3, arr4));
+const arr3 = [1, 2, 9, 10];
+const arr4 = [1, 4, 81, 10];
+console.log(this.same(arr3, arr4));
 
 // Solution 2
 
@@ -34,7 +34,7 @@ const frequencyCounter = iterable => {
   return fc;
 };
 
-const checkSquare = (arr1, arr2) => {
+module.exports.checkSquare = (arr1, arr2) => {
   if (arr1.length !== arr2.length) {
     return false;
   }
@@ -56,4 +56,4 @@ const checkSquare = (arr1, arr2) => {
   return true;
 };
 
-console.log(checkSquare([1, 2, 3, 4, 5], [1, 20, 16, 9, 4]));
+console.log(this.checkSquare([1, 2, 3, 4, 5], [1, 20, 16, 9, 4]));
