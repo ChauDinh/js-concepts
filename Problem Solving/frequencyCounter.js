@@ -17,29 +17,30 @@ const same = (arr1, arr2) => {
     arr2.splice(correctIndex, 1);
   }
   return true;
-}
+};
 
-const arr3 = [1, 2, 9, 10];
-const arr4 = [1, 4, 81, 10];
-console.log(same(arr3, arr4));
+// const arr3 = [1, 2, 9, 10];
+// const arr4 = [1, 4, 81, 10];
+// console.log(same(arr3, arr4));
 
 // Solution 2
+
+const frequencyCounter = iterable => {
+  let fc = {};
+  for (let item of iterable) {
+    fc[item] = fc[item] + 1 || 1;
+  }
+
+  return fc;
+};
 
 const checkSquare = (arr1, arr2) => {
   if (arr1.length !== arr2.length) {
     return false;
   }
-  
-  const freqArr1 = {};
-  const freqArr2 = {};
 
-  for (item of arr1) {
-    freqArr1[item] = (freqArr1[item] || 0) + 1;
-  }
-
-  for (item of arr2) {
-    freqArr2[item] = (freqArr2[item] || 0) + 1;
-  }
+  const freqArr1 = frequencyCounter(arr1);
+  const freqArr2 = frequencyCounter(arr2);
 
   console.log(freqArr1);
   console.log(freqArr2);
