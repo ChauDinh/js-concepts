@@ -119,15 +119,35 @@ function setBoolean(receiver, state, prop) {
   state.booleanValue = null;
 }
 
+function enterDefineMethodMode(receiver, state) {
+  state.inDefineMethodMode = true;
+  return receiver;
+}
+
+function setMethod(receiver, state, prop) {
+  state.inDefineMethodMode = false;
+  return phrase => {
+    const f = () => `${state.name} ${conjugate(prop)} : ${phrase}`;
+    state.methods = { ...state.methods, [prop]: f };
+  };
+}
+
+function conjugate(word) {
+  return word + "s";
+}
+
 const proxify = (target, state) => {
   return new Proxy(target, {
     get: function(target, prop, receiver) {
       if (state.inBooleanMode) return setBoolean(this, state, prop);
+      if (state.inDefineMethodMode) return setMethod(receiver, state, prop);
       if (prop === "name") return state[prop];
       if (prop === "is_a") return enterBooleanMode(receiver, state, true);
       if (prop === "is_not_a") return enterBooleanMode(receiver, state, false);
       if (prop.startsWith("is_a_"))
         return state.booleans[prop.replace("is_a_", "")];
+      if (prop === "can") return enterDefineMethodMode(receiver, state);
+      if (state.methods[prop]) return state.methods[prop];
       return target[prop];
     }
   });
@@ -137,8 +157,12 @@ const t = new Thing("Hoang Thuy Linh");
 
 t.is_a.singer;
 t.is_not_a.teacher;
+t.can.sing("Để Mị nói cho mà nghe, sông Hương đã đẩy Mị lệch tủ cmnr :(((");
 
 console.log(t.name);
 console.log(t.age);
 console.log(t.is_a_singer);
 console.log(t.is_a_teacher);
+console.log(t.sing());
+
+// module.exports.test = t;
