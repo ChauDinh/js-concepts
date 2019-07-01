@@ -23,8 +23,7 @@ module.exports.sumZero = function(arr) {
     } else {
       left++;
     }
-    return "There is no solution conforms";
   }
 };
 
-console.log(this.sumZero([1, 2, 3, 4, 5]));
+console.log(this.sumZero([-2, 2, 3, 4, 5]));
