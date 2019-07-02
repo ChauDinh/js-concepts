@@ -49,3 +49,13 @@ First, we check the first element of the array (at index = 0). At this state, we
 Then we loop through the array to check that whether there is curNum+1 in the array or not. If the answer is yes, we increase the curNum and the curStreak. The result is the maximum value between result and the curStreak.
 
 This solution run in O(n^3) since we have a while loop in a for loop, then in while loop, we also have a for loop which is described in arrayContain helper function.
+
+### The `nlogn` solution question
+
+In the `nlogn` solution, I've put a question below the line
+
+```js
+return Math.max(result, curStreak);
+```
+
+The reason we have to return the maximum of the two values is when the input is a sorted array such as `[1, 2, 3, 4, 5]`, after the for loop end, we have `curStreak = 5` and the `result = 1` since it hasn't updated during the interation. So, to avoid that, we have to return the maximum value of curStreak and result to have the correct answer.

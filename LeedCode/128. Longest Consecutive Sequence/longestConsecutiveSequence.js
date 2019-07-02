@@ -6,6 +6,7 @@ function arrayContain(arr, e) {
 }
 
 module.exports.longestConsecutiveSequence = function(arr) {
+  if (arr.length === 0) return null;
   let result = 0;
   for (let i = 0; i < arr.length; i++) {
     let curNum = arr[i];
