@@ -13,5 +13,9 @@ describe("test the sliding window technique", () => {
     expected = null;
     actual = slidingWindow.maxSubarraySum([2, 3], 3);
     expect(actual).toEqual(expected);
+
+    expected = 6;
+    actual = slidingWindow.maxSubarraySum([5, 2, -1, 0, 3], 3);
+    expect(actual).toEqual(expected);
   });
 });
