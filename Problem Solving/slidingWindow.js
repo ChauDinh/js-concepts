@@ -11,22 +11,17 @@
 
 // Write a function accepts an array of integers and a number. The function should calculate the maximum sum of n consecutive elements in the array.
 
-module.exports.maxSubarraySum = function(arr, num) {
+module.exports.maxSubarraySum = function(arr, k) {
+  if (arr.length < k) return null;
   let maxSum = 0;
-  let tempSum = 0;
-  if (arr.length < num) return null;
-
-  for (let i = 0; i < num; i++) {
+  for (let i = 0; i < k; i++) {
+    // Compute the sum of first window of size k
     maxSum += arr[i];
   }
-  tempSum = maxSum;
-
-  for (let i = num; i < arr.length; i++) {
-    // each new tempSum is the previous n numbers, minus the first element of n numbers, plus the next element in the array
-    // this way we only loop through the array once, resetting tempNum to be new window of n numbers.
-    tempSum = tempSum - arr[i - num] + arr[i];
-    // if tempSum is greater than tempSum becomes maxSum
-    maxSum = Math.max(maxSum, tempSum);
+  let windowSum = maxSum;
+  for (let i = k; i < arr.length; i++) {
+    windowSum += arr[i] - arr[i - k];
+    maxSum = Math.max(maxSum, windowSum);
   }
 
   return maxSum;
