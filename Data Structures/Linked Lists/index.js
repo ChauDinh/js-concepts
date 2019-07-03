@@ -48,5 +48,6 @@ class LinkedList {
 const ll = new LinkedList();
 
 ll.insertFirst(100);
+ll.insertFirst(200);
 
 console.log(ll);
