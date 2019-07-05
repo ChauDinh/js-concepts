@@ -27,6 +27,17 @@ class LinkedList {
     this.size = 0;
   }
 
+  // Search first node with key k
+  listSearch(data) {
+    if (!this.head) return null;
+    let current = this.head;
+    while (current !== null && current.data !== data) {
+      current = current.next;
+    }
+
+    return current;
+  }
+
   // Insert first node
   insertFirst(data) {
     this.head = new Node(data, this.head);
@@ -148,11 +159,12 @@ ll.insertFirst(300);
 ll.insertLast(400);
 ll.insertLast(600);
 ll.insertIndex(500, 2);
+ll.insertIndex(500, 3);
 
 ll.removeAt(11);
 
-ll.clearList();
-
+// ll.clearList();
 ll.printListData();
 ll.getAt(10);
 console.log(JSON.stringify(ll, 0, 2));
+console.log(ll.listSearch(500));
