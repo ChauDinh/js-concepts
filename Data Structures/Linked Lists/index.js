@@ -167,4 +167,4 @@ ll.removeAt(11);
 ll.printListData();
 ll.getAt(10);
 console.log(JSON.stringify(ll, 0, 2));
-console.log(ll.listSearch(500));
+console.log(JSON.stringify(ll.listSearch(500), 0, 2));
