@@ -26,3 +26,11 @@ Sun.change("💋");
 console.log(Sun.icon, Sun.prev);
 
 // Define static methods
+
+class StaticEmoji {
+  static addOneTo(val) {
+    return val + 1;
+  }
+}
+
+StaticEmoji.addOneTo(3);
