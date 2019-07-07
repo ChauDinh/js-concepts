@@ -29,4 +29,4 @@ const appendEmoji = fixed => dynamic => fixed + dynamic;
 const rain = appendEmoji("🌧");
 const sun = appendEmoji("🌝");
 
-console.log(rain("today"));
+console.log(rain(" today "));

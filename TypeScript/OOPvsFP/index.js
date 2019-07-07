@@ -12,7 +12,7 @@ var addEmoji = function (val) { return toString(val) + "😀"; };
 var emojiData = data.map(addEmoji);
 console.log(emojiData);
 // Functions as return value
-var appendEmoji = function (fixed) { return function (dynamic) { return fixed + " " + dynamic; }; };
+var appendEmoji = function (fixed) { return function (dynamic) { return fixed + dynamic; }; };
 var rain = appendEmoji("🌧");
 var sun = appendEmoji("🌝");
-console.log(rain("today"));
+console.log(rain(" today "));
