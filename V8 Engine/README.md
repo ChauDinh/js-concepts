@@ -154,3 +154,35 @@ function divideSomeNumbers(lhsArray, divisor, resultArray) {
 Cool, that looks good. But wait! We replaced a call to a known method - divide - with a call to a method that is chosen at runtime. And that method depends on the arguments to our function! Did we just make it slower? Quite possibly - unless the JIT is smart enough, every call to divider will be a virtual call of some sort, and this might prevent inlining and other key optimizations.
 
 How does it work, actually? V8 maintains a cache of the type of objects that were passed as a parameter in recent method calls and uses this information to make an assumption about the type of object that will be passed as a parameter in the future. If V8 is able to make a good assumption about the type of object that will be passed to a method, it can bypass the process of figuring out how to access the object’s properties, and instead, use the stored information from previous lookups to the object’s hidden class.
+
+## Compilation to machine code
+
+Once the Hydrogen graph is optimized, Crankshaft lowers it to a lower-level representation called Lithium. Most of the Lithium implementation is architecture-specific. Register allocation happens at this level.
+
+In the end, Lithium is compiled into machine code. Then something else happens called OSR: on-stack replacement. Before we started compiling and optimizing an obviously long-running method, we were likely running it. V8 is not going to forget what it just slowly executed to start again with the optimized version. Instead, it will transform all the context we have (stack, registers) so that we can switch to the optimized version in the middle of the execution. This is a very complex task, having in mind that among other optimizations, V8 has inlined the code initially. V8 is not the only engine capable of doing it.
+
+There are safeguards called deoptimization to make the opposite transformation and reverts back to the non-optimized code in case an assumption the engine made doesn’t hold true anymore.
+
+## Garbage collection
+
+V8 uses traditional generation approach of mark-and-sweep to clean the old generations. The marking phase is supposed to stop the JavaScript execution. In order to control GC costs and make the execution more stable, V8 uses incremental marking: instead of walking the whole heap, trying to mark every possible, it only walk part of the heap, then resumes normal execution.
+
+The next GC stop will continue from where the previous heap walk has stopped. This allows very short pauses during the normal execution. As mentioned, the sweep phase is handled by separated threads.
+
+## Ignition and TurboFan
+
+Ignition is a V8's interpreter and TurboFan is a new optimizing compiler in V8. Since version 5.9 of V8 came out, full-codegen and Crankshaft (the technologies that have served V8 since 2010) have no longer been used by V8 for JavaScript execution as the V8 team has struggled to keep pace with the new JavaScript language features and the optimizations needed for these features.
+
+Finally, here are some tips and tricks on how to write well-optimized, better JavaScript. You can easily derive these from the content above, however, here’s a summary for your convenience:
+
+## How to write optimized JavaScript
+
+- Order of object properties: hidden classes, and subsequently optimized code, can be shared.
+
+- Dynamic properties: adding properties to an object after instantiation will force a hidden class change and slow down any methods that were optimized for the previous hidden class. Instead, assign all of an object’s properties in its constructor.
+
+- Methods: code that executes the same method repeatedly will run faster than code that executes many different methods only once (due to inline caching).
+
+- Arrays: avoid sparse arrays where keys are not incremental numbers. Sparse arrays which don’t have every element inside them are a hash table. Elements in such arrays are more expensive to access. Also, try to avoid pre-allocating large arrays. It’s better to grow as you go. Finally, don’t delete elements in arrays. It makes the keys sparse.
+
+- Tagged values: V8 represents objects and numbers with 32 bits. It uses a bit to know if it is an object (flag = 1) or an integer (flag = 0) called SMI (SMall Integer) because of its 31 bits. Then, if a numeric value is bigger than 31 bits, V8 will box the number, turning it into a double and creating a new object to put the number inside. Try to use 31 bit signed numbers whenever possible to avoid the expensive boxing operation into a JS object.
