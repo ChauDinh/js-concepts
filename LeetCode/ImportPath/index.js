@@ -43,7 +43,9 @@ module.exports = importPath = (str1, str2) => {
   if (str1Splited.length === 1) {
     finalLocation = "./";
   } else {
-    finalLocation = `${finalLocation}../`;
+    for (let i = 0; i < str1Splited.length - 1; i++) {
+      finalLocation = `${finalLocation}../`;
+    }
   }
 
   for (let i = 0; i < str2Splited.length - 1; i++) {
@@ -55,4 +57,4 @@ module.exports = importPath = (str1, str2) => {
   return finalLocation;
 };
 
-console.log(importPath("src/route/app/home.js", "src/route/utils/helpers.js"));
+console.log(importPath("src/route/app/home.js", "src/utils/helpers.js"));

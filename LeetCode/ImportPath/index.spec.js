@@ -8,5 +8,9 @@ describe("tets for import path problem", () => {
       "src/route/utils/helpers.js"
     );
     expect(actual).toEqual(expected);
+
+    expected = "../../utils/helpers.js";
+    actual = importPath("src/route/app/home.js", "src/utils/helpers.js");
+    expect(actual).toEqual(expected);
   });
 });
