@@ -98,15 +98,28 @@ class DoublyLinkedList {
       this.size--;
     }
   }
+
+  // Return the doubly linked list as string
+  toStringify() {
+    let current = this.head;
+    let string = "";
+
+    while (current) {
+      string += current.data + (current.next ? "\n" : "");
+      current = current.next;
+    }
+    return string;
+  }
 }
 
 const dbl = new DoublyLinkedList();
 
 dbl.insert(100, 0);
 dbl.insert(200, 0);
-dbl.insert(400, 0);
 dbl.insert(300, 1);
+dbl.insert(400, 3);
 dbl.insert(500, 3);
-dbl.remove(1);
+dbl.remove(3);
 
 console.log(dbl);
+console.log(dbl.toStringify());
