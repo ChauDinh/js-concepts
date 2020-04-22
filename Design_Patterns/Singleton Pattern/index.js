@@ -2,6 +2,7 @@
  * The Singleton Pattern
  *
  * The singleton pattern creates a class with a method creating a new instance of the class if doesn't exist or returning a reference if an instance exists.
+ *
  */
 
 let mySingleton = function () {
