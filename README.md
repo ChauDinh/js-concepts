@@ -10,65 +10,105 @@ Updating...
 
 ## Table of Contents
 
-* Callstack
+- Callstack
 
-* Premitive Type, Reference Type
+- Premitive Type, Reference Type
 
-* Implicit, Explicit, Nominal, Structuring, and Duck
+- Implicit, Explicit, Nominal, Structuring, and Duck
 
-* Function, Scope, block scope, lexical scope
+- Function, Scope, block scope, lexical scope
 
-* Arrow functions
+- Arrow functions
 
-* IIFE, modules, namespaces
+- IIFE, modules, namespaces
 
-* Message queue and Event Loop
+- Message queue and Event Loop
 
-* Expression, statement
+- Expression, statement
 
-* setTimeout, setInterval, requestAnimationFrame
+- setTimeout, setInterval, requestAnimationFrame
 
-* this, bind, call and apply
+- this, bind, call and apply
 
-* Bitwise operators, type arrays and array buffers
+- Bitwise operators, type arrays and array buffers
 
-* DOM and Layout trees
+- DOM and Layout trees
 
-* Factories and Classes
+- Factories and Classes
 
-* new, constructor, instanceof and instance
+- new, constructor, instanceof and instance
 
-* Prototype Inheritance and Prototype Chain
+- Prototype Inheritance and Prototype Chain
 
-* Object.create and Object.assign
+- Object.create and Object.assign
 
-* Closures
+- Closures
 
-* Higher order functions
+- Higher order functions
 
-* Recursion
+- Recursion
 
-* Pure functions, side effects, state mutation
+- Pure functions, side effects, state mutation
 
-* map, reduce, filter
+- map, reduce, filter
 
-* Collections and Generations
+- Collections and Generations
 
-* Promises
+- Promises
 
-* Async/await
+- Async/await
 
-* Data Structures
+- Data Structures
 
-* Expensive Operation and Big-Oh notation
+- Expensive Operation and Big-Oh notation
 
-* Algorithms
+- Algorithms
 
-* Inheritance, Polymophism and Reuse
+- Inheritance, Polymophism and Reuse
 
-* Partial Applications, Currying, Compose and Pipe
+- Partial Applications, Currying, Compose and Pipe
 
-* Design patterns
+- Design patterns
 
-* Clean code
+- Clean code
 
+## Trở thành một lập trình viên chuẩn mực
+
+### Một số thủ thuật cơ bản (tricks):
+
+- 2 con trỏ (multiple pointers)
+- Dãy tạm
+
+Một số suy nghĩ về việc tối ưu thời gian chạy:
+
+- Dùng bảng băm khi đề bài yêu cầu tìm chính xác (O(1));
+
+- Dùng 2 con trỏ khi cần tìm gần đúng, hoặc tìm kế tiếp (chống vòng lặp for và đệ quy).
+
+- Biết dùng đệ quy đúng cách.
+
+- Dùng cây tìm kiếm tối thiểu trả về giá trị Min, không cần duyệt toàn bộ hay sort().
+
+- Dùng cây tìm kiếm nhị phân, vừa thêm, vừa kiếm.
+
+### Thuật toán
+
+- Đệ quy Backtrack
+- Quy hoạch động - đệ quy có nhớ:
+  - Đếm cách
+  - Dùng ít nhất (chi phí nhỏ nhất)
+- Nhánh cận
+  ...
+
+### Cấu trúc dữ liệu
+
+- Cây nhị phân: tối thiểu, tìm kiếm
+- Graph
+- Hash table, hash map
+  ...
+
+### Khả năng thực chiến - Xây dựng ứng dụng, app ...
+
+- Tìm median (eCommerce)
+- Bài toán đặt phòng
+- Autocomplete
