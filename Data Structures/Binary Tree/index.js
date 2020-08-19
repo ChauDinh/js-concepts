@@ -17,25 +17,25 @@ class BinaryTree {
       this.root = new Node(info, null, null);
       return;
     } else {
-      const searchTree = function (node) {
+      const createTree = function (node) {
         if (info < node.info) {
           if (node.left === null) {
             node.left = new Node(info, null, null);
             return;
           } else if (node.left !== null) {
-            return searchTree(node.left);
+            return createTree(node.left);
           }
         } else if (info > node.info) {
           if (node.right === null) {
             node.right = new Node(info, null, null);
           } else if (node.right !== null) {
-            return searchTree(node.right);
+            return createTree(node.right);
           }
         } else {
           return null;
         }
       };
-      return searchTree(node);
+      return createTree(node);
     }
   }
 
@@ -57,15 +57,18 @@ class BinaryTree {
 
   find(info) {
     let currentNode = this.root;
+    let parentNode = this.root;
     while (currentNode.info !== info) {
       if (info > currentNode.info) {
+        parentNode = currentNode;
         currentNode = currentNode.right;
       } else {
+        parentNode = currentNode;
         currentNode = currentNode.left;
       }
       if (currentNode === null) return null;
     }
-    return currentNode;
+    return { currentNode, parentNode };
   }
 
   isPresent(info) {
@@ -88,15 +91,19 @@ class BinaryTree {
         return null;
       }
       if (info === node.info) {
+        // if the deleted node has no left child and right child
         if (node.left === null && node.right === null) {
           return null;
         }
+        // if the deleted node has no left child
         if (node.left === null) {
           return node.right;
         }
+        // if the deleted node has no right child
         if (node.right === null) {
           return node.left;
         }
+        // if the deleted node has both left and right child
         let tempNode = node.right;
         while (tempNode.left !== null) {
           template = tempNode.left;
@@ -165,6 +172,26 @@ class BinaryTree {
       return visit(node);
     }
   }
+
+  leftRotate(info) {
+    let node = this.find(info) ? this.find(info).currentNode : null;
+    let rightNode = node ? node.right : null;
+    if (rightNode !== null) {
+      // Copy the info
+      let info = node.info;
+      node.info = rightNode.info;
+      rightNode.info = info;
+
+      // left rotation
+      node.right = rightNode.right;
+      rightNode.right = rightNode.left;
+      rightNode.left = node.left;
+      node.left = rightNode;
+      return this.leftRotate(rightNode.info);
+    }
+  }
+
+  rightRotate(info) {}
 }
 
 const bst1 = new BinaryTree();
@@ -175,9 +202,7 @@ bst1.add(11);
 bst1.add(-2);
 bst1.add(8);
 bst1.add(21);
-bst1.remove(21);
-console.log(bst1);
-console.log("Root node: ", bst1.root);
-console.log("pre order traversal: ", bst1.preOrderTraversal());
-console.log("in order traversal: ", bst1.inOrderTraversal());
-console.log("post order traversal: ", bst1.postOrderTraversal());
+console.log(bst1.root);
+console.log(bst1.leftRotate(20));
+console.log(bst1.root);
+console.log(bst1.find(21));
