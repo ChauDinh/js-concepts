@@ -176,7 +176,7 @@ class BinaryTree {
   leftRotate(info) {
     let node = this.find(info) ? this.find(info).currentNode : null;
     let rightNode = node ? node.right : null;
-    if (rightNode !== null) {
+    if (rightNode) {
       // Copy the info
       let info = node.info;
       node.info = rightNode.info;
@@ -191,7 +191,23 @@ class BinaryTree {
     }
   }
 
-  rightRotate(info) {}
+  rightRotate(info) {
+    let node = this.find(info) ? this.find(info).currentNode : null;
+    let leftNode = node ? node.left : null;
+    if (leftNode !== null) {
+      // Copy the info
+      let info = node.info;
+      node.info = leftNode.info;
+      leftNode.info = info;
+
+      // right rotation
+      node.left = leftNode.left;
+      leftNode.left = leftNode.right;
+      leftNode.right = node.right;
+      node.right = leftNode;
+      return this.rightRotate(leftNode.info);
+    }
+  }
 }
 
 const bst1 = new BinaryTree();
@@ -201,8 +217,9 @@ bst1.add(5);
 bst1.add(11);
 bst1.add(-2);
 bst1.add(8);
-bst1.add(21);
+bst1.add(12);
+bst1.add(9);
 console.log(bst1.root);
-console.log(bst1.leftRotate(20));
+// console.log(bst1.leftRotate(20));
+console.log(bst1.rightRotate(20));
 console.log(bst1.root);
-console.log(bst1.find(21));
