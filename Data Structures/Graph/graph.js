@@ -93,21 +93,34 @@ console.log("BFS shortest path: ", bfs(0, 12));
 
 function dfs(s) {
   let visited = new Array(graph.vertices).fill(false);
+  let prev = new Array(graph.vertices).fill(null);
 
   let visit = (at) => {
-    if (visited[at]) return;
+    // if (visited[at]) return;
     console.log("visit node: ", at);
     visited[at] = true;
 
     let neighbors = graph.edges[at];
     let curr = neighbors.head;
     while (curr) {
-      visit(curr.data);
+      prev[curr.data] = at;
+      if (!visited[curr.data]) {
+        visit(curr.data);
+      }
       curr = curr.next;
     }
   };
 
-  return visit(s);
+  visit(s);
+
+  // let path = [];
+  // for (let i = 0; i !== null; i = prev[i]) {
+  //   path.push(i);
+  // }
+
+  // console.log("path: ", path.reverse());
+
+  return prev;
 }
 
 console.log("DFS from 0: ", dfs(0));
@@ -140,8 +153,8 @@ function findComponents() {
 
   for (let i = 0; i < newGraph.vertices; i++) {
     if (!visited[i]) {
-      visit(i);
       count++;
+      visit(i);
     }
   }
 
@@ -158,6 +171,17 @@ function findComponents() {
       curr = curr.next;
     }
   }
+
+  let map = new Map();
+  for (let i = 0; i < components.length; i++) {
+    if (map.has(`Connected component ${components[i]}`)) {
+      map.get(`Connected component ${components[i]}`).push(i);
+    } else {
+      map.set(`Connected component ${components[i]}`, [i]);
+    }
+  }
+
+  console.log("Connected Components: ", map);
 
   return {
     count: count,
