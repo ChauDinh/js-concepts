@@ -191,6 +191,121 @@ function findComponents() {
 
 console.log("Find components: ", findComponents());
 
+function DFSPractice(s) {
+  let visited = new Array(newGraph.vertices).fill(false);
+  let components = [];
+  let count = 0;
+
+  for (let i = 0; i < visited.length; i++) {
+    if (!visited[i]) {
+      count++;
+      visit(i);
+    }
+  }
+
+  function visit(at) {
+    visited[at] = true;
+    components[at] = count;
+
+    let neighbors = newGraph.edges[at];
+    let curr = neighbors.head;
+    while (curr) {
+      if (!visited[curr.data]) {
+        visit(curr.data);
+      }
+      curr = curr.next;
+    }
+  }
+
+  return components;
+}
+
+console.log("DFS Practice: ", DFSPractice(0));
+
+function BFSPractice(s, e) {
+  let prev = solvePractice(s);
+  return reconstructPathPractice(s, e, prev);
+}
+
+function solvePractice(s) {
+  let visited = new Array(newGraph.vertices).fill(false);
+  let prev = new Array(newGraph.vertices).fill(null);
+
+  let queue = [];
+  queue.push(s);
+  visited[s] = true;
+
+  while (queue.length) {
+    let node = queue.shift();
+    let neighbors = newGraph.edges[node];
+
+    let curr = neighbors.head;
+    while (curr) {
+      if (!visited[curr.data]) {
+        if (!queue.includes(curr.data)) {
+          queue.push(curr.data);
+        }
+        visited[curr.data] = true;
+        prev[curr.data] = node;
+      }
+      curr = curr.next;
+    }
+  }
+  console.log("BFS practice prev: ", prev);
+  return prev;
+}
+
+function reconstructPathPractice(s, e, prev) {
+  let path = [];
+  for (i = e; i !== null; i = prev[i]) {
+    path.push(i);
+  }
+  path.reverse();
+  return path[0] === s ? path : [];
+}
+
+console.log("Shortest path from 3 -> 12: ", BFSPractice(3, 12));
+
+function findConnectedComponentBFS() {
+  let components = [];
+  let visited = new Array(newGraph.vertices).fill(false);
+  let count = 0;
+
+  for (let i = 0; i < visited.length; i++) {
+    if (!visited[i]) {
+      count++;
+      bfs(i);
+    }
+  }
+
+  function bfs(at) {
+    let q = [];
+    q.push(at);
+    visited[at] = true;
+    components[at] = count;
+
+    while (q.length) {
+      let node = q.shift();
+      let neighbors = newGraph.edges[node];
+      let curr = neighbors.head;
+
+      while (curr) {
+        if (!visited[curr.data]) {
+          if (!q.includes(curr.data)) {
+            q.push(curr.data);
+          }
+          visited[curr.data] = true;
+          components[curr.data] = count;
+        }
+        curr = curr.next;
+      }
+    }
+  }
+
+  return components;
+}
+
+console.log("Connected Components BFS: ", findConnectedComponentBFS());
 // function solvePractice(s) {
 //   let queue = []; // Initialize the queue
 //   queue.push(s); // enqueue node S for first visiting
