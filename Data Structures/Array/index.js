@@ -64,3 +64,103 @@ function productsFollowingUp(input) {
 }
 
 console.log(productsFollowingUp([1, 2, 3, 4, 5]));
+
+/**
+ * Locate smallest window to be sorted
+ *
+ * Given an array of integers, determine the smallest bound of window that must be sorted in order for
+ * the entire array to be sorted.
+ */
+
+function smallestWindow(input) {
+  if (input.length === 0) return [];
+
+  const inputSorted = [...input].sort((a, b) => a - b);
+
+  let left = null;
+  let right = null;
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] !== inputSorted[i] && left === null) {
+      left = i;
+    } else if (input[i] !== inputSorted[i]) {
+      right = i;
+    }
+  }
+
+  return [left, right];
+}
+
+console.log("smallest window: ", smallestWindow([3, 7, 5, 6, 9]));
+
+function smallestWindow2(input) {
+  if (input.length === 0) return [];
+
+  // Determine right bound
+  let currMax = Number.MIN_VALUE;
+  let right = null;
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] < currMax) {
+      right = i;
+    } else {
+      currMax = input[i];
+    }
+  }
+
+  // Determine left bound
+  let currMin = Number.MAX_VALUE;
+  let left = null;
+  for (let i = input.length - 1; i >= 0; i--) {
+    if (input[i] > currMin) {
+      left = i;
+    } else {
+      currMin = input[i];
+    }
+  }
+
+  return [left, right];
+}
+
+console.log("smallest window 2: ", smallestWindow2([3, 7, 5, 6, 9]));
+
+/**
+ * Calculate maximum subarray sum
+ *
+ * Given an array of integers, find the maximum of continuous subarray
+ */
+
+function maxSum(input) {
+  if (input.length === 0) return 0;
+
+  function sumArr(i, j) {
+    let sum = 0;
+    for (let k = i; k <= j; k++) {
+      sum += input[k];
+    }
+    return sum;
+  }
+
+  let currMax = Number.MIN_VALUE;
+  for (let i = 0; i < input.length - 1; i++) {
+    for (let j = i + 1; j < input.length; j++) {
+      currMax = Math.max(currMax, sumArr(i, j));
+    }
+  }
+
+  return currMax;
+}
+
+console.log("max sum: ", maxSum([1, 2, 3, 4, 5]));
+
+function maxSum2(input) {
+  if (input.length === 0) return 0;
+  let maxAtIndex = 0;
+  let maxGlobal = 0;
+  for (let i = 0; i < input.length; i++) {
+    maxAtIndex = Math.max(input[i], maxAtIndex + input[i]);
+    maxGlobal = Math.max(maxGlobal, maxAtIndex);
+  }
+
+  return maxGlobal;
+}
+
+console.log("max sum 2: ", maxSum2([34, -50, 42, 14, -5, 86]));
