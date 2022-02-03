@@ -30,23 +30,15 @@ const detectShift = function (nums) {
 
 const search = function (nums, target) {
   let shiftIndx = detectShift(nums);
-  let result = -1;
-  if (nums[shiftIndx] === target) {
-    return shiftIndx;
-  }
-  let first = binarySearch(nums.slice(0, shiftIndx + 1), target);
-  let second = binarySearch(nums.slice(shiftIndx + 1, nums.length), target);
+  console.log('shiftIndx: ', shiftIndx);
+  let first = nums.slice(0, shiftIndx + 1)[0];
+  let second = nums.slice(shiftIndx + 1, nums.length)[0];
   
   if (first === -1 && second === -1) {
-    return result;
+    return false;
   } else {
-    if (first !== -1) {
-      return first;
-    }
-    if (second !== -1) {
-      return shiftIndx + second + 1;
-    }
+    return true;
   }
 }
 
-console.log(search([4, 5, 6, 7, 0, 1, 2], 2));
+console.log(search([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], 2));
