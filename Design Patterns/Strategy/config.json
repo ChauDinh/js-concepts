@@ -1,0 +1,5 @@
+{
+  "paymentMethod": {
+    "strategy": "Paypal"
+  }
+}
