@@ -1,0 +1,4 @@
+- `Promise.race()` lets you know as soon as one of the given promises either fulfills or rejects
+- `Promise.allSettled()` lets you know when all promises either fulfill or reject
+- `Promise.all()` lets you know as soon as one of the given promises rejects or when all of them fulfill
+- `Promises.any()` lets you know as soon as one of the given promises fulfills or when none of them fulfills.
