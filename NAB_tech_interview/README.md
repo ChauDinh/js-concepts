@@ -1,0 +1,46 @@
+# NAB Technical Interview 2022
+
+The document is my preparation for technical interview at NAB in 2022. The topics I think have to be covered are:
+
+- Sharing about my 3 years experience working in Software Engineer, especially in Frontend development
+- Familiar with web development:
+  - HTML5
+  - CSS3
+  - Vanilla JavaScript
+  - TypeScript
+- Experience in modern frontend build pipeline:
+  - Webpack
+  - Git, GitFlow
+- Understanding RESTful APIs design, microservices system
+  - RESTful concepts
+  - HTTP actions
+  - microservices
+  - micro-frontend
+- CI/CD with GitLap
+- Tool and frameworks:
+  - React.js
+  - Next.js
+  - React Native
+- Security:
+  - JWT vs. Session
+  - Some security attacks: XSS, Cross-site-scripting
+- Algorithms & Data Structures
+  - Sorted arrays and binary search
+    - Merge sort, Quick sort, Tim sort
+    - Binary search
+    - Left-most binary search
+  - String concatenation
+    - String methods in JS
+    - Trie, map
+  - Linked list
+    - Dummy Node
+    - Two pointers
+    - Fast & slow pointers
+  - Recursion banned
+    - Stack
+  - Permutations/combinations/subsets
+    - Backtracking
+  - Recomputing same input
+    - Memoization
+  - Find the Smallest/Largest/Median in a Stream
+    - Two heaps

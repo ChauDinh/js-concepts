@@ -79,21 +79,3 @@ function main3(A) {
 }
 
 console.log(main3([1, 1, 1]));
-
-// function rangeQueries (A = []) {
-//   if (A.length === 0) return;
-//   let count = new Array(3).fill(0).map(x => new Array(3));
-
-//   for (let i = 0; i < A.length; i++) {
-//     for (let j = 0; j < 3; j++) {
-//       if (j === A[i]) {
-//         count[i][j] = (i >= 1) ? count[i - 1][j] + 1 : 1;
-//       } else {
-//         count[i][j] = (i >= 1) ? count[i - 1][j] : 0;
-//       }
-//     }
-//   }
-//   return;
-// }
-
-// console.log(rangeQueries([2, 1, 1]));
